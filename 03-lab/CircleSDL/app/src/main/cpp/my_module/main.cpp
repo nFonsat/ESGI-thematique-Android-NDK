@@ -14,12 +14,12 @@ int main(int argc, char* argv[]) {
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(
-        "SDL Chess",                  // window title
-        SDL_WINDOWPOS_UNDEFINED,           // initial x position
-        SDL_WINDOWPOS_UNDEFINED,           // initial y position
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
+            "SDL Circle",                  // window title
+            SDL_WINDOWPOS_UNDEFINED,           // initial x position
+            SDL_WINDOWPOS_UNDEFINED,           // initial y position
+            640,                               // width, in pixels
+            480,                               // height, in pixels
+            SDL_WINDOW_OPENGL                  // flags - see below
     );
 
     // Check that the window was successfully created
@@ -39,33 +39,30 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Rect rect, darea;
-    int row = 0,column = 0,x = 0;
 
     while (1) {
         // Set render color to red ( background will be rendered in this color )
-        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255);
 
         // Clear winow
         SDL_RenderClear( renderer );
 
-        /* Get the Size of drawing surface */
-        SDL_RenderGetViewport(renderer, &darea);
-        for( ; row < 8; row++)
+        int width;
+        int height;
+        int radius = 100;
+        SDL_GetWindowSize(window, &width, &height);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+        for (int w = 0; w < radius * 2; w++)
         {
-            column = row%2;
-            x = column;
-            for( ; column < 4+(row%2); column++)
+            for (int h = 0; h < radius * 2; h++)
             {
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-
-                rect.w = darea.w/8;
-                rect.h = darea.h/8;
-                rect.x = x * rect.w;
-                rect.y = row * rect.h;
-                x = x + 2;
-
-                SDL_RenderFillRect(renderer, &rect);
+                int dx = radius - w; // horizontal offset
+                int dy = radius - h; // vertical offset
+                if ((dx*dx + dy*dy) <= (radius * radius))
+                {
+                    SDL_RenderDrawPoint(renderer, width/2 + dx, height/2 + dy);
+                }
             }
         }
 
