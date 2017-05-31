@@ -14,12 +14,12 @@ int main(int argc, char* argv[]) {
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(
-        "SDL Chess",                  // window title
-        SDL_WINDOWPOS_UNDEFINED,           // initial x position
-        SDL_WINDOWPOS_UNDEFINED,           // initial y position
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
+            "SDL Mouse Tracker",                  // window title
+            SDL_WINDOWPOS_UNDEFINED,           // initial x position
+            SDL_WINDOWPOS_UNDEFINED,           // initial y position
+            640,                               // width, in pixels
+            480,                               // height, in pixels
+            SDL_WINDOW_OPENGL                  // flags - see below
     );
 
     // Check that the window was successfully created
@@ -39,35 +39,33 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Rect rect, darea;
-    int row = 0,column = 0,x = 0;
+    SDL_Point mouse_position;
 
     while (1) {
         // Set render color to red ( background will be rendered in this color )
-        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255);
+        SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255);
 
         // Clear winow
         SDL_RenderClear( renderer );
 
-        /* Get the Size of drawing surface */
-        SDL_RenderGetViewport(renderer, &darea);
-        for( ; row < 8; row++)
-        {
-            column = row%2;
-            x = column;
-            for( ; column < 4+(row%2); column++)
-            {
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        SDL_GetMouseState(                    //    Sets mouse_position to...
+                &mouse_position.x,                // ...mouse arrow coords on window
+                &mouse_position.y
+        );
 
-                rect.w = darea.w/8;
-                rect.h = darea.h/8;
-                rect.x = x * rect.w;
-                rect.y = row * rect.h;
-                x = x + 2;
+        SDL_Log("Mouse position: x=%i y=%i",  //    Print mouse position
+                mouse_position.x, mouse_position.y
+        );
 
-                SDL_RenderFillRect(renderer, &rect);
-            }
-        }
+        SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255);
+
+        SDL_Rect rect;
+        rect.x = mouse_position.x;
+        rect.y = mouse_position.y;
+        rect.w = 100;
+        rect.h = 100;
+
+        SDL_RenderFillRect(renderer, &rect);
 
         // Render the rect to the screen
         SDL_RenderPresent(renderer);
