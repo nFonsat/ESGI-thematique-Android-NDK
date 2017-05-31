@@ -9,11 +9,6 @@ int fibonnaci (int n) {
     return (fibonnaci(n-1))+(fibonnaci(n-2));
 }
 
-JNIEXPORT jstring JNICALL
-Java_fr_nicolasfonsat_hellotestndk_MainActivity_stringFromJNI(JNIEnv *env, jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
-}
 
 JNIEXPORT jint JNICALL
 Java_fr_nicolasfonsat_hellotestndk_MainActivity_fibonnaciC(JNIEnv *env, jobject, jint n) {

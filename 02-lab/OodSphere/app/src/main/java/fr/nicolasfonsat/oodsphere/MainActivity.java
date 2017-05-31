@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         int[] results = solution(3, 100, new int[]{100, 3, 45});
         Log.d("XXXXXXXX", "RESULTAT " + Arrays.toString(results));
+
+
     }
 
     /**
