@@ -39,33 +39,34 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    SDL_Rect rect, darea;
-    int row = 0,column = 0,x = 0;
+    int width, heigth;
+
+    SDL_GetWindowSize(window, &width, &heigth);
+
+    int sizeSquarre=width/5;
 
     while (1) {
         // Set render color to red ( background will be rendered in this color )
-        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255);
 
         // Clear winow
         SDL_RenderClear( renderer );
 
-        /* Get the Size of drawing surface */
-        SDL_RenderGetViewport(renderer, &darea);
-        for( ; row < 8; row++)
-        {
-            column = row%2;
-            x = column;
-            for( ; column < 4+(row%2); column++)
-            {
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        for(int ligne = 0; ligne < 6; ligne++) {
+            for(int column = 0; column < 7; column ++) {
+                if(column % 2 == 0) {
+                    if(ligne % 2 == 0) {
+                        SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255);
+                        SDL_Rect rect = (SDL_Rect){ligne * sizeSquarre, column * sizeSquarre, sizeSquarre, sizeSquarre};
+                        SDL_RenderFillRect(renderer, &rect);
+                    }
+                } else {
+                    if(ligne % 2 != 0) {
+                        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255);
+                        SDL_Rect rect = (SDL_Rect){ligne * sizeSquarre, column * sizeSquarre, sizeSquarre, sizeSquarre};
+                        SDL_RenderFillRect(renderer, &rect);
+                    }
+                }
 
-                rect.w = darea.w/8;
-                rect.h = darea.h/8;
-                rect.x = x * rect.w;
-                rect.y = row * rect.h;
-                x = x + 2;
-
-                SDL_RenderFillRect(renderer, &rect);
             }
         }
 

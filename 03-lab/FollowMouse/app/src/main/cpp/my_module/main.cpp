@@ -6,6 +6,8 @@
 #include "SDL.h"
 #include <stdio.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 int main(int argc, char* argv[]) {
 
     SDL_Window *window;                    // Declare a pointer

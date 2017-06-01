@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TextView tv = (TextView) findViewById(R.id.sample_text);
-                        tv.setText(stringFromJNI());                    }
+                        tv.setText(stringFromJNI());
+                    }
                 });
             }
         };
